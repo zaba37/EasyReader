@@ -5,7 +5,11 @@
  */
 package com.zaba37.easyreader.windows;
 
+import com.zaba37.easyreader.actions.OpenAction;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -40,6 +44,8 @@ public class MainWindow extends JFrame {
         JMenu fileMenu = new JMenu("File");
         
         JMenuItem loadMI = new JMenuItem("Open");
+        loadMI.addActionListener(new OpenAction(this));
+        
         JMenu saveAsMI = new JMenu("Save As");
         JMenuItem exitMI = new JMenuItem("Exit");
         
