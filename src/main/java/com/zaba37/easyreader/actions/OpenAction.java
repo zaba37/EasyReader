@@ -6,9 +6,12 @@
 package com.zaba37.easyreader.actions;
 
 import com.zaba37.easyreader.Utils;
+import com.zaba37.easyreader.windows.MainWindow;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileFilter;
@@ -31,8 +34,14 @@ public class OpenAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        fileChooser.showDialog(frame, "Open image");
-        
+        int returnVal = fileChooser.showDialog(frame, "Open image");
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+            File file = fileChooser.getSelectedFile();
+            ((MainWindow)frame).loadImage(file);
+
+        }
     }
 
     private class ImageFilter extends FileFilter {

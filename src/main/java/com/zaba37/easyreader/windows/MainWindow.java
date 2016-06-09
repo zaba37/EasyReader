@@ -6,6 +6,7 @@
 package com.zaba37.easyreader.windows;
 
 import com.zaba37.easyreader.actions.OpenAction;
+import com.zaba37.easyreader.imageView.ScaledImageLabel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,13 +15,19 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -41,6 +48,7 @@ public class MainWindow extends JFrame {
     private JPanel containerPanel;
     private Container contentPane;
     private JTextPane textArea;
+    private JLabel imageView;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public MainWindow() {
@@ -66,7 +74,7 @@ public class MainWindow extends JFrame {
         containerPanel.setLayout(new GridLayout(1, 2, 0, 0)); //0,0 are gaps
         containerPanel.add(createImagePanel());
         containerPanel.add(createTextPanel());
-        
+
         this.add(containerPanel);
     }
 
@@ -143,8 +151,25 @@ public class MainWindow extends JFrame {
     }
 
     private JPanel createImagePanel() {
-        JPanel imagePanel = new JPanel();
+        JPanel imagePanel = new JPanel(new GridBagLayout());
+        GridBagConstraints componentConstraints = new GridBagConstraints();
+
+        componentConstraints.fill = GridBagConstraints.HORIZONTAL;
+        componentConstraints.weightx = 0.2;
+        componentConstraints.weighty = 0;
+        componentConstraints.gridx = 0;
+        componentConstraints.gridy = 0;
+
         imagePanel.setBackground(Color.yellow);
+        imagePanel.add(createImageToolsPanel(), componentConstraints);
+
+        componentConstraints.gridx = 0;
+        componentConstraints.gridy = 1;
+        componentConstraints.fill = GridBagConstraints.BOTH;
+        componentConstraints.weightx = 1.0;
+        componentConstraints.weighty = 1.0;
+        createImageViewArea();
+        imagePanel.add(imageView, componentConstraints);
 
         return imagePanel;
     }
@@ -161,7 +186,7 @@ public class MainWindow extends JFrame {
 
         textPanel.setBackground(Color.green);
         textPanel.add(createTextToolsPanel(), componentConstraints);
-        
+
         componentConstraints.gridx = 0;
         componentConstraints.gridy = 1;
         componentConstraints.fill = GridBagConstraints.BOTH;
@@ -169,7 +194,7 @@ public class MainWindow extends JFrame {
         componentConstraints.weighty = 1.0;
 
         textPanel.add(createTextEditorArea(), componentConstraints);
-        
+
         return textPanel;
     }
 
@@ -187,6 +212,7 @@ public class MainWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane();
         textArea = new JTextPane();
 
+        textArea.setBackground(Color.white);
         textArea.setContentType("text/html");
         scrollPane.add(textArea);
 
@@ -198,7 +224,37 @@ public class MainWindow extends JFrame {
 
     private JPanel createImageToolsPanel() {
         JPanel imageToolsPanel = new JPanel();
+        JButton b = new JButton("button 1");
+        
+        try {
+            Image img = ImageIO.read(new File("resource/Bold-104.png"));
+            b.setIcon(new ImageIcon(img));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        imageToolsPanel.add(b);
 
         return imageToolsPanel;
+    }
+
+    private void createImageViewArea() {
+        JPanel imageViewPanel = new JPanel();
+        JScrollPane scrollPane = new JScrollPane();
+        imageView = new ScaledImageLabel();
+
+        //scrollPane.add(imageView);
+        //imageViewPanel.add(scrollPane);
+        //scrollPane.setViewportView(imageView);
+        //return imageView;
+    }
+
+    public void loadImage(File file) {
+        try {
+            Image image = ImageIO.read(file);
+            imageView.setIcon(new ImageIcon(image));
+        } catch (Exception ex) {
+            System.err.println(ex);
+        }
     }
 }
