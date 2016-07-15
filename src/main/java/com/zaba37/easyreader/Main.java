@@ -7,27 +7,23 @@ package com.zaba37.easyreader;
 
 import com.zaba37.easyreader.windows.MainWindow;
 import java.io.File;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import net.sourceforge.tess4j.*;
 
 public class Main {
 
     public static void main(String[] args) {
-//        File imageFile = new File("phototest.tif");
-//        ITesseract instance = new Tesseract();  // JNA Interface Mapping
-//        //ITesseract instance = new Tesseract1(); // JNA Direct Mapping
-//
-//        try {
-//            String result = instance.doOCR(imageFile);
-//            System.out.println(result);
-//        } catch (TesseractException e) {
-//            System.err.println(e.getMessage());
-//        }
-
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow();
-            }
+        
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (java.lang.Exception e) {
+            JOptionPane.showMessageDialog(null, "GUI Error");
+        }
+        
+        SwingUtilities.invokeLater(() -> {
+            new MainWindow().setVisible(true);
         });
 
     }

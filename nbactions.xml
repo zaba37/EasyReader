@@ -14,4 +14,22 @@
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
+<<<<<<< HEAD
+=======
+        <action>
+            <actionName>debug</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath com.zaba37.easyreader.Main</exec.args>
+                <exec.executable>java</exec.executable>
+                <jpda.listen>true</jpda.listen>
+            </properties>
+        </action>
+>>>>>>> d8538352d2e427c850b6c5a050f90b565df099c8
     </actions>
