@@ -22,9 +22,9 @@ public class Main {
             JOptionPane.showMessageDialog(null, "GUI Error");
         }
         
-        SwingUtilities.invokeLater(() -> {
+        //SwingUtilities.invokeLater(() -> {
             new MainWindow().setVisible(true);
-        });
+      //  });
 
     }
 }

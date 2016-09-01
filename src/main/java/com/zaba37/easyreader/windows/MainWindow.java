@@ -5,6 +5,8 @@
  */
 package com.zaba37.easyreader.windows;
 
+import com.zaba37.easyreader.actions.imageEditor.ZoomInAction;
+import com.zaba37.easyreader.actions.imageEditor.ZoomOutAction;
 import com.zaba37.easyreader.actions.menuBar.OpenAction;
 import com.zaba37.easyreader.actions.menuBar.SaveAsAction;
 import com.zaba37.easyreader.actions.menuBar.StartOcrAction;
@@ -13,6 +15,8 @@ import com.zaba37.easyreader.actions.textEditor.ChangeFontAction;
 import com.zaba37.easyreader.actions.textEditor.ChangeFontSizeAction;
 import com.zaba37.easyreader.actions.textEditor.ItalicAction;
 import com.zaba37.easyreader.actions.textEditor.UnderlineAction;
+import com.zaba37.easyreader.imageView.ImagePanel;
+import com.zaba37.easyreader.imageView.ImageScrollView;
 import com.zaba37.easyreader.imageView.ScaledImageLabel;
 import com.zaba37.easyreader.ocr.OcrEngine;
 import java.awt.Color;
@@ -317,7 +321,7 @@ public class MainWindow extends JFrame {
     }
 
     private JPanel createImageToolsPanel() {
-        JPanel imageToolsPanel = new JPanel();
+        JPanel imageToolsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         JButton incresZoomButton = new JButton();
         JButton decresZoomButton = new JButton();
@@ -360,10 +364,10 @@ public class MainWindow extends JFrame {
         layout.setVgap(1);
         layout.setHgap(1);
 
-        //boldButton.addActionListener(new BoldAction(textArea));
+        incresZoomButton.addActionListener(new ZoomInAction());
         buttonsPanel.add(incresZoomButton);
         
-       // italicButton.addActionListener(new ItalicAction(textArea));
+        decresZoomButton.addActionListener(new ZoomOutAction());
         buttonsPanel.add(decresZoomButton);
         
         buttonsPanel.add(rotateLeftButton);
@@ -384,13 +388,14 @@ public class MainWindow extends JFrame {
     }
 
     private JScrollPane createImageViewArea() {
-        JPanel imageViewPanel = new JPanel();
-        JScrollPane scrollPane = new JScrollPane();
+        ImagePanel imageViewPanel = new ImagePanel();
         imageView = new ScaledImageLabel();
+        ImageScrollView scrollPane = new ImageScrollView(imageView);
+
 
         scrollPane.add(imageView);
-        imageViewPanel.add(scrollPane);
-        scrollPane.setViewportView(imageView);
+        //imageViewPanel.add(imageView);
+       // scrollPane.setViewportView(imageViewPanel);
         
         return scrollPane;
     }
